@@ -2,8 +2,11 @@ package main
 
 import (
 	"fmt"
+	"encoding/json"
 	"net/http"
 	"log"
+
+	"github.com/gorilla/mux"
 
 	"./smoother"
 )
@@ -15,19 +18,21 @@ func main() {
 
 	http.Handle("/", r)
 	fmt.Println("Hello world")
-	log.Fatal(http.ListenAndServe())
+	fmt.Println("Listening and serving on :8080")
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
 type Data struct {
 	BloombergData []int `json:"data"`
 }
 
-func indexHandler(w http.ResponseWriter, r *http.Request) {
+func indexHandler(w http.ResponseWriter, req *http.Request) {
 
+	var data *Data
 	req.ParseForm()
 	for key, _ := range req.Form {
 		log.Println(key)         //LOG: {"test": "that"}
-		data := &Data{}
+		data = &Data{}
 		err := json.Unmarshal([]byte(key), data)
 		if err != nil {
 			log.Println(err.Error())
@@ -39,7 +44,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
-	return jsonResult
+	w.Write(jsonResult)
 
 }
 

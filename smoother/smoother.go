@@ -11,6 +11,7 @@ type ReturnInfo struct {
 	MeanSquaredError string `json:"mse"`
 }
 
-func Smooth() {
+func Smooth(input []int) *ReturnInfo {
 	fmt.Println("Goodbye world")
+	return &ReturnInfo{}
 }
