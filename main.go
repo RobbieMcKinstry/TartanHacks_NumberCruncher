@@ -22,24 +22,20 @@ func main() {
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
-type Data struct {
-	BloombergData []int `json:"data"`
-}
-
 func indexHandler(w http.ResponseWriter, req *http.Request) {
 
-	var data *Data
+	var data *smoother.History
 	req.ParseForm()
 	for key, _ := range req.Form {
 		log.Println(key)         //LOG: {"test": "that"}
-		data = &Data{}
+		data = &smoother.History{}
 		err := json.Unmarshal([]byte(key), data)
 		if err != nil {
 			log.Println(err.Error())
 		}
 	}
 
-	result := smoother.Smooth(data.BloombergData)
+	result := smoother.Smooth(data.Data)
 	jsonResult, err := json.Marshal(result)
 	if err != nil {
 		log.Println(err)

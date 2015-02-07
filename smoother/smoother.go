@@ -11,14 +11,21 @@ type ReturnInfo struct {
 	MeanSquaredError string `json:"mse"`
 }
 
-func Smooth(input []int) *ReturnInfo {
+func Smooth(input []float64) *ReturnInfo {
 	fmt.Println("Goodbye world")
+
+	history := &History{Data: input}
+	alpha, beta := OptimizeAB(history)
+	next, mse := history.forecast(alpha, beta)
+	fmt.Println(next)
+	fmt.Println(mse)
+
 	return &ReturnInfo{
 		Symbol: "AAPL",
 		Current: "100",
 		Tomorrow: "110",
 		AmountIncrease: "10",
-		PercentIncrease: "10"
-		MeanSquaredError: "2.5"
+		PercentIncrease: "10",
+		MeanSquaredError: "2.5",
 	}
 }
