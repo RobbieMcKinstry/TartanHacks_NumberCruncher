@@ -47,4 +47,3 @@ func indexHandler(w http.ResponseWriter, req *http.Request) {
 	w.Write(jsonResult)
 
 }
-

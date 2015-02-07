@@ -13,5 +13,12 @@ type ReturnInfo struct {
 
 func Smooth(input []int) *ReturnInfo {
 	fmt.Println("Goodbye world")
-	return &ReturnInfo{}
+	return &ReturnInfo{
+		Symbol: "AAPL",
+		Current: "100",
+		Tomorrow: "110",
+		AmountIncrease: "10",
+		PercentIncrease: "10"
+		MeanSquaredError: "2.5"
+	}
 }
