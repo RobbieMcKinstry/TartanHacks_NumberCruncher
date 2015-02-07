@@ -11,7 +11,7 @@ import (
 
 // a wrapper for a slice of float64s, with a cached current value, but remember to use `json`
 type History struct {
-	Data        []float64 `json: "data"`
+	Data []float64 `json: "data"`
 }
 
 type Result struct {
@@ -19,8 +19,6 @@ type Result struct {
 	Beta  float64
 	Mse   float64
 }
-
-
 
 // this function reads the json string in from the request, before passing it to the NewHistory func
 func HandleComputationRequest(w http.ResponseWriter, r *http.Request) {
@@ -253,8 +251,8 @@ func calculateMSE(s1, s2 []float64) float64 {
 // returns the forecasted array.
 func (me *History) forecastedArray(alpha, beta float64) []float64 {
 	observed := me.Data
-	S := make([]float64, len(observed))
-	B := make([]float64, len(observed))
+	S := make([]float64, len(observed)+1)
+	B := make([]float64, len(observed)+1)
 
 	size := len(observed)
 	S[0] = me.Data[0]
